@@ -8,10 +8,12 @@
  * Controller of the whichSubApp
  */
 angular.module('whichSubApp')
-  .controller('MainCtrl', function () {
-    this.awesomeThings = [
-      'HTML5 Boilerplate',
-      'AngularJS',
-      'Karma'
-    ];
-  });
+  .controller('MainCtrl',['$scope', 'GGRedditService', function ($scope, GGRedditService) {
+    GGRedditService.getRandomSub()
+      .then(function(res) {
+        $scope.data = res.data.data.children[0].data.subreddit;
+      },function(error) {
+        $scope.data = error;
+      });
+      
+  }]);
